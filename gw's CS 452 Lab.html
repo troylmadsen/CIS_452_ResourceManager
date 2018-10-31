@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<!-- saved from url=(0063)https://cis.gvsu.edu/~wolffe/courses/cs452/labs/program_03.html -->
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  
+  <meta name="GENERATOR" content="Mozilla/4.79 [en] (Win98; U) [Netscape]">
+  <meta name="Author" content="gw">
+  <title>gw's CS 452 Lab</title></head>
+<body style="direction: ltr;" bgcolor="#ffffff">
+<center>
+<h2>CS 452 Program 3<br>
+Resource Manager<br>
+</h2>
+</center>
+<hr>
+<h3>Overview</h3>
+The purpose of this programming assignment is to reinforce your
+understanding of the role of the operating system as a resource
+manager. &nbsp;To do this, you will implement a simulation that tracks
+system state and utilizes a deadlock detection protocol.<br>
+<h3><br>
+</h3>
+<h3>Activities</h3>
+<ul>
+  <li> Develop a&nbsp;<span style="font-style: italic; font-weight: bold;"></span>program that simulates an operating system functioning
+as a resource manager.<br>
+  </li>
+  <li>This is to be an <span style="font-style: italic; font-weight: bold;">individual </span>programming
+assignment.</li>
+  <li>Submit your <span style="font-style: italic; font-weight: bold;">well-documented</span>
+source code and sample runs/snapshots.&nbsp; Be prepared to demonstrate
+your program.</li>
+</ul>
+<h3><br>
+</h3>
+<h3>Programming Assignment (Deadlock-Detection Resource Manager)<br>
+</h3>
+The primary task of a resource manager is the efficient and correct
+allocation of resources.&nbsp; To do this properly, the manager must be
+completely informed as to the current state of the system -- processes,
+resources available, what resources does each process own, what resource does each process
+want.&nbsp; This requires some sort of dynamic internal represenation
+of the resource allocation graph described in your
+textbook (see Section 5.11 on Deadlocks).<br>
+<br>
+Given complete knowledge of the current state of the system, it should
+be possible for a resource manager to
+conduct an evaluation of the system.&nbsp; Obviously, a request for a
+resource that is currently being used cannot be granted, and the
+requesting process must be delayed.&nbsp; However, sometimes a process
+is not merely delayed, but deadlocked; and the resource manager should
+be able to detect this problem and either produce diagnostic output or
+take corrective measures.&nbsp; This suggests the need for some type of
+deadlock detection protocol, such as a cycle-detection algorithm.<br>
+<br>
+The goal of this assignment is to create a resource manager and
+simulate the activity of the manager in response to changing run-time
+conditions.&nbsp; The system you will model has multiple processes,
+multiple resource types, but only a
+single instance of each resource class (this makes it easier to detect deadlock).<br>
+<br>
+The input file(s) <span style="font-family: monospace; font-weight: bold;"></span><span style="font-family: monospace; font-weight: bold;"></span>posted on
+the course info page have the following format:<br>
+<ul>
+  <li>Processes:&nbsp; an integer representing the total number of
+processes in the system</li>
+</ul>
+<ul>
+  <li>Resources:&nbsp; an integer representing the total number of
+resource classes in the system.&nbsp; There is one instance of each
+resource type.</li>
+</ul>
+<ul>
+  <li>Resource request: the name of a process and the name of
+the resource it is requesting</li>
+</ul>
+<ul>
+  <li>Resource release: the name of a process and the name of
+the resource it is releasing</li>
+</ul>
+<ul>
+</ul>
+The first two values (processes, resources) should be used to
+initialize your system.&nbsp; The remaining lines in the input file
+consist of resource
+requests/releases that represent the activity of the various processes&nbsp;in the
+system over time.&nbsp; At each resource request, your program should display the
+activity taken as a result of the request (e.g. "P2 now owns R3"), and
+output the result of a deadlock detection check (e.g. "System is
+deadlocked: processes P1, P2").<br>
+<br>
+<span style="text-decoration: underline;">Output</span><br>
+<br>
+An additional requirement is that your program must graphically display
+output.<br>
+<ul>
+  <li>you are already maintaining some sort of internal representation
+of
+system state in the form of a resource allocation graph.&nbsp; Display
+the graph.</li>
+  <li>the graph should change dynamically in response to changes in
+system state (e.g. requests, allocations, releases, deadlocks).<br>
+  </li>
+</ul>
+<br>
+<p><span style="font-weight: bold;">Guidelines</span>:<br>
+</p>
+<ul>
+  <li>this is a <span style="font-weight: bold;">simulation </span>--
+you may use any language on any platform<br>
+  </li>
+  <li>you may modify the format<span style="font-style: italic;"> </span>of
+the input files as desired<br>
+  </li>
+  <li>be sure to incorporate informative/diagnostic output into your
+program</li><li>it is recommended that you create a <span style="font-weight: bold;">multi-file</span>
+solution. &nbsp;Most sophisticated programs consist of multiple files
+(usually written by different developers). &nbsp;They are built
+(compiled) and work together to implement a solution.</li><ul><li>recall
+the Model-View-Controller (MVC) paradigm, or the Model-View-Presenter
+(MVP) pattern. &nbsp;The suggested approach is to completely de-couple
+your internal representation and "engine" from the code that implements
+the graphical display.</li><li>this would be a good opportunity to practice using build tools such as <span style="font-family: monospace;">make</span> or <span style="font-family: monospace;">ant</span>, or professional environments such as Visual Studio, Eclipse, or PyQt.</li></ul>
+</ul>
+<h3><br>
+</h3>
+<h3>Possible Enhancements</h3>You must demonstrate the correct
+execution of your program on the posted sample input files.
+&nbsp;However, you may choose to create an additional, enhanced version
+of your resource manager.
+<ul>
+  <li>create a <span style="font-weight: bold;">deadlock avoidance</span>
+resource manager</li>
+  <ul>
+    <li>add <span style="font-style: italic;">a priori</span>
+knowledge regarding resource usage to the initialization phase</li>
+    <li>add claim edges to your resource allocation graph</li>
+    <li>implement a deadlock avoidance protocol as described in class<br>
+    </li>
+  </ul>
+</ul>
+<ul></ul>
+<ul><li>implement&nbsp; a <span style="font-weight: bold;">detect-and-recover</span> policy<br>
+  </li><ul><li>develop a protocol for recovering from detected deadlocks (as described in class)</li></ul></ul>
+</body></html>
