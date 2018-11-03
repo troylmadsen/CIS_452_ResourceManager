@@ -10,15 +10,17 @@ public class View extends JFrame {
      * @param name Name to display in the title bar.
      */
     public View(String name) {
+        super(name);
+
         // Set up base properties
-        this.setName(name);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Add menu bar
         this.setJMenuBar(constructMenuBar());
 
-        // Add an empty simulation panel
-        this.add(new SimulationPanel(0, 0));
+        // Add simulation panel
+        //FIXME pass parsed number of processes and resources in
+        this.add(new SimulationPanel(20,200));
 
         // Display the window
         this.pack();
