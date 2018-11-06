@@ -14,13 +14,14 @@ public class View extends JFrame {
 
         // Set up base properties
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
 
         // Add menu bar
         this.setJMenuBar(constructMenuBar());
 
         // Add simulation panel
         //FIXME pass parsed number of processes and resources in
-        this.add(new SimulationPanel(20,200));
+        this.add(new SimulationPanel(20,20));
 
         // Display the window
         this.pack();

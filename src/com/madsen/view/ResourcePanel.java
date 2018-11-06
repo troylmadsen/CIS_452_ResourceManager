@@ -1,10 +1,17 @@
 package com.madsen.view;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.Random;
 
 public class ResourcePanel extends JPanel {
+
+    /** Height of a ResourcePanel */
+    public static final int HEIGHT = 25;
+
+    /** Width of a ResourcePanel */
+    public static final int WIDTH = 90;
 
     /** Unique color of this process */
     private Color col;
@@ -18,6 +25,9 @@ public class ResourcePanel extends JPanel {
 
         // Create a border around this panel
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+
+        // Set the size of this panel
+        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         // Set the color of this panel
         Random r = new Random();

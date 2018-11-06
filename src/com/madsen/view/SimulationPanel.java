@@ -8,7 +8,9 @@ public class SimulationPanel extends JPanel {
     public SimulationPanel(int processes, int resources) {
         super();
 
-        //FIXME check that processes and resources are valid
+        // Ensure that processes and resources are valid
+        processes = processes > 0 ? processes : 0;
+        resources = resources > 0 ? resources : 0;
 
         // Set the color of this panel
         this.setBackground(new Color(150,150,150));

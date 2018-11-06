@@ -58,8 +58,6 @@ public class ProcessPanel extends JPanel {
         // Setup the resource tracking of this process
         this.resources = new JPanel();
         this.resources.setPreferredSize(new Dimension(674,100));
-//        this.resources.setMinimumSize(new Dimension(674,100));
-//        this.resources.setMaximumSize(new Dimension(674,100));
         this.resources.setLayout(new FlowLayout(FlowLayout.LEFT));
         //FIXME remove
         for (int i = 0; i < 20; i++) {
