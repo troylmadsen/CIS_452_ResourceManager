@@ -3,8 +3,18 @@ package com.madsen.view;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Class responsible for displaying the processes and resources of a single
+ * simulation.
+ */
 public class SimulationPanel extends JPanel {
 
+    /**
+     * Constructs a panel displaying processes and resources of a simulation.
+     *
+     * @param processes Number of processes in the simulation.
+     * @param resources Number of resources in the simulation.
+     */
     public SimulationPanel(int processes, int resources) {
         super();
 
@@ -28,8 +38,6 @@ public class SimulationPanel extends JPanel {
         // Add a panel to display resources
         ResourcesPanel resourcesPanel = new ResourcesPanel(resources);
         this.add(resourcesPanel);
-
-        //FIXME add ResourcesPanel
     }
 
 }

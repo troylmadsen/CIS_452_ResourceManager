@@ -1,22 +1,29 @@
 package com.madsen.view;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.Random;
 
+/**
+ * Panel to display the information of a single shared resource.
+ */
 public class ResourcePanel extends JPanel {
 
     /** Height of a ResourcePanel */
     public static final int HEIGHT = 25;
 
     /** Width of a ResourcePanel */
-    public static final int WIDTH = 90;
+    private static final int WIDTH = 90;
 
     /** Unique color of this process */
     private Color col;
 
-    //FIXME info
+    /**
+     * Constructs a panel to display the information of a single system
+     * resource.
+     *
+     * @param name Name of the system resource to display.
+     */
     public ResourcePanel(String name) {
         super();
 
@@ -27,7 +34,7 @@ public class ResourcePanel extends JPanel {
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
 
         // Set the size of this panel
-        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        this.setPreferredSize(new Dimension(WIDTH,HEIGHT));
 
         // Set the color of this panel
         Random r = new Random();
@@ -39,7 +46,11 @@ public class ResourcePanel extends JPanel {
         addLabel(name);
     }
 
-    //FIXME info
+    /**
+     * Add a label to this panel to display the name of the resource.
+     *
+     * @param name Name of the resource to display.
+     */
     private void addLabel(String name) {
         JLabel l = new JLabel(name);
         Color lCol;
@@ -53,10 +64,17 @@ public class ResourcePanel extends JPanel {
         this.add(l);
     }
 
-    public void setTaken() {
+    /**
+     * Sets the color of this panel to show that it is currently held by a
+     * process.
+     */
+    public void setHeld() {
         this.setBackground(new Color(150,150,150));
     }
 
+    /**
+     * Sets the color of this panel to show that it is currently free.
+     */
     public void setFree() {
         this.setBackground(this.col);
     }

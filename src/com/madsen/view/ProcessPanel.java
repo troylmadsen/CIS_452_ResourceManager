@@ -4,12 +4,21 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 
+/**
+ * Panel to display all information about a single process.
+ */
 public class ProcessPanel extends JPanel {
 
     /** Colors to display states of process execution */
     public static final Color BLOCKED = new Color(255,255,0);
     public static final Color DEADLOCKED = new Color(255,0,0);
     public static final Color RUNNING = new Color(50,130,50);
+
+    /** Height of a ProcessPanel */
+    public static final int PREF_HEIGHT = 100;
+
+    /** Width of a ProcessPanel */
+    public static final int PREF_WIDTH = 780;
 
     /** Panel responsible for displaying resources */
     private JPanel resources;
@@ -37,8 +46,8 @@ public class ProcessPanel extends JPanel {
         // Create a border around this panel
         this.setBorder(BorderFactory.createLineBorder(this.col,3));
 
-        // Limit the maximum size of this panel
-        this.setMaximumSize(new Dimension(780,100));
+        // Set the size of this panel
+        this.setPreferredSize(new Dimension(PREF_WIDTH, PREF_HEIGHT));
 
         // Setup the layout of this panel
         this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
@@ -48,8 +57,6 @@ public class ProcessPanel extends JPanel {
         JPanel processLabel = new JPanel();
         processLabel.setBackground(ProcessPanel.RUNNING);
         processLabel.setPreferredSize(new Dimension(100, 100));
-        processLabel.setMinimumSize(new Dimension(100, 100));
-        processLabel.setMaximumSize(new Dimension(100, 100));
         processLabel.setLayout(new GridBagLayout());
         JLabel label = new JLabel(name);
         processLabel.add(label);
@@ -60,9 +67,9 @@ public class ProcessPanel extends JPanel {
         this.resources.setPreferredSize(new Dimension(674,100));
         this.resources.setLayout(new FlowLayout(FlowLayout.LEFT));
         //FIXME remove
-        for (int i = 0; i < 20; i++) {
-            addResource("Test " + i);
-        }
+//        for (int i = 0; i < 20; i++) {
+//            addResource("Test " + i);
+//        }
         this.add(this.resources);
     }
 
@@ -72,21 +79,6 @@ public class ProcessPanel extends JPanel {
      * @param name Name of the resource to add.
      */
     public void addResource(String name) {
-//        //FIXME user ResourcePanel here
-//        JPanel p = new JPanel();
-//        p.setName(name);
-//        p.setBackground(this.col);
-//        JLabel l = new JLabel(name);
-//        Color lCol;
-//        if ((this.col.getRed() + this.col.getGreen() + this.col.getBlue()) / 3 > 128) {
-//            lCol = Color.BLACK;
-//        }
-//        else {
-//            lCol = Color.WHITE;
-//        }
-//        l.setForeground(lCol);
-//        p.add(l);
-//        this.resources.add(p);
         this.resources.add(new ResourcePanel(name));
     }
 
@@ -106,11 +98,6 @@ public class ProcessPanel extends JPanel {
         }
 
         return false;
-    }
-
-    @Override
-    public Dimension getPreferredSize() {
-        return new Dimension(780,100);
     }
 
 }

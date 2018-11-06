@@ -1,8 +1,15 @@
 package com.madsen.view;
 
 import javax.swing.*;
+import java.io.File;
 
+/**
+ * Class responsible for managing all display of the Resource Manager.
+ */
 public class View extends JFrame {
+
+    /** Simulation panel currently displayed */
+    private SimulationPanel panel;
 
     /**
      * Constructs a View object with the given name in the title bar.
@@ -19,9 +26,9 @@ public class View extends JFrame {
         // Add menu bar
         this.setJMenuBar(constructMenuBar());
 
-        // Add simulation panel
-        //FIXME pass parsed number of processes and resources in
-        this.add(new SimulationPanel(20,20));
+        // Add empty simulation panel
+        panel = new SimulationPanel(0,0);
+        this.add(panel);
 
         // Display the window
         this.pack();
@@ -38,7 +45,7 @@ public class View extends JFrame {
         JMenuBar menuBar = new JMenuBar();
 
         // Build menuFile item
-        JMenu menuFile = new JMenu("File");
+        JMenu menuFile = new JMenu("New");
         menuBar.add(menuFile);
 
         // Build menuExit item
@@ -46,6 +53,33 @@ public class View extends JFrame {
         menuBar.add(menuExit);
 
         return menuBar;
+    }
+
+    public void createSimulation(int processes, int resources) {
+        this.remove(panel);
+        panel = new SimulationPanel(processes,resources);
+        this.add(panel);
+        this.pack();
+    }
+
+    /**
+     * Retrieves input file to be parsed by Resource Manager for simulation.
+     *
+     * @return File to be parsed by Resource Manager.
+     */
+    public File getInputFile () {
+        // Create file chooser and set it to only select files
+        JFileChooser chooser = new JFileChooser(new File(System.getProperty("user.dir")));
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+        // Attempt to get a file from the user
+        File file = null;
+//        chooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            file = chooser.getSelectedFile();
+        }
+
+        return file;
     }
 
 }

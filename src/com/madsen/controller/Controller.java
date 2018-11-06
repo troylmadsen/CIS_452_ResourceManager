@@ -5,6 +5,10 @@ import com.madsen.view.View;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.LinkedList;
+import java.util.Scanner;
 
 /**
  * Controls the operation of Resource Manager.
@@ -20,41 +24,74 @@ public class Controller {
     /** View handling the display of Resource Manager. */
     private View view;
 
+    /** Number of processes in the current simulation */
+    private int processes;
+
+    /** Number of resources in the current simulation */
+    private int resources;
+
+    /** List of commands process/resource commands to operate */
+    private LinkedList<String> commands;
+
     /**
      * Constructs all necessary pieces of Resource Manager.
      */
     public Controller() {
-        // Initialize view
-        view = new View(PROGRAM_NAME);
+        // Input file to parse
+        File file;
 
-        //FIXME Let the user tell the program to choose a file
-        // Continually attempt to get a file from the user
-//        File file;
-//        while (file == null) {
-//            file = getInputFile();
-//        }
+        // Wait for view to be initialized
+        try {
+            SwingUtilities.invokeAndWait(new Runnable() {
+                @Override
+                public void run() {
+                    view = new View(PROGRAM_NAME);
+                }
+            });
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            System.exit(1);
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
 
-//        model = new Model();
+        // Get a file from the user
+        file = view.getInputFile();
+
+        // Parse file and create new simulation
+        if (file != null) {
+            parseFile(file);
+            view.createSimulation(this.processes,this.resources);
+        }
     }
 
     /**
-     * Retrieves input file to be parsed by Resource Manager for simulation.
+     * Parses the specified file for simulation parameters and commands.
      *
-     * @return File to be parsed by Resource Manager.
+     * @param file File to parse for simulation parameters and commands.
      */
-    private File getInputFile () {
-        // Create file chooser and set it to only select files
-        JFileChooser chooser = new JFileChooser();
-        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+    private void parseFile(File file) {
+        // Clear old simulation parameters and commands
+        this.processes = 0;
+        this.resources = 0;
+        this.commands = new LinkedList<>();
 
-        // Attempt to get a file from the user
-        File file = null;
-        chooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-        if (chooser.showOpenDialog(view) == JFileChooser.APPROVE_OPTION) {
-            file = chooser.getSelectedFile();
+        // Parse file for simulation parameters and commands
+        try {
+            Scanner scanner = new Scanner(file);
+            this.processes = scanner.nextInt();
+            scanner.nextLine();
+            this.resources = scanner.nextInt();
+            scanner.nextLine();
+            while (scanner.hasNextLine()) {
+                this.commands.addLast(scanner.nextLine());
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-
-        return file;
     }
+
+
 
 }
