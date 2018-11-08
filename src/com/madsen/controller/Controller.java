@@ -206,7 +206,7 @@ public class Controller implements MenuListener {
      * @param p Process to set in blocked state.
      */
     private void setBlocked(Process p) {
-        if (p != null) {
+        if (p != null && !p.isBlocked()) {
             p.setBlocked();
             this.view.setBlocked(p.getName());
             System.out.println(p.getName() + " blocked");
@@ -219,7 +219,7 @@ public class Controller implements MenuListener {
      * @param p Process to set in deadlocked state.
      */
     private void setDeadlocked(Process p) {
-        if (p != null) {
+        if (p != null && !p.isDeadlocked()) {
             p.setDeadlocked();
             this.view.setDeadlocked(p.getName());
             System.out.println(p.getName() + " deadlocked");
