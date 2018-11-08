@@ -1,7 +1,10 @@
 package com.madsen.view;
 
+import com.madsen.model.Resource;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Panel to display all processes in the simulation.
@@ -18,15 +21,16 @@ public class ProcessesPanel extends JPanel {
     /** Panel to display processes */
     private JPanel panel;
 
+    /** Process panels displayed */
+    private ArrayList<ProcessPanel> processes;
+
     /**
      * Constructs a panel to display all processes in the simulation.
      *
-     * @param processes Number of processes.
+     * @param numProcesses Number of processes.
      */
-    public ProcessesPanel(int processes) {
+    public ProcessesPanel(int numProcesses) {
         super();
-//        super(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-//                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         // Set up this panel
         this.setPreferredSize(new Dimension(PREF_WIDTH,PREF_HEIGHT));
@@ -46,16 +50,26 @@ public class ProcessesPanel extends JPanel {
         scrollPane.getVerticalScrollBar().setUnitIncrement(10);
         panel = new JPanel();
         panel.setBackground(new Color(150,150,150));
-//        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setLayout(new FlowLayout(FlowLayout.LEFT,0,GAP));
         panel.setPreferredSize(new Dimension(ProcessPanel.PREF_WIDTH,
-                (ProcessPanel.PREF_HEIGHT + GAP) * processes + GAP));
+                (ProcessPanel.PREF_HEIGHT + GAP) * numProcesses + GAP));
         scrollPane.setViewportView(panel);
         this.add(scrollPane,BorderLayout.CENTER);
 
-        for (int i = 0; i < processes; i++) {
-            addProcess("Process " + i);
+        // Create the processes
+        this.processes = new ArrayList<>(numProcesses);
+        for (int i = 0; i < numProcesses; i++) {
+            addProcess("p" + i);
         }
+    }
+
+    /**
+     * Returns all processes displayed by this panel.
+     *
+     * @return All processes displayed by this panel.
+     */
+    public ArrayList<ProcessPanel> getProcesses() {
+        return this.processes;
     }
 
     /**
@@ -64,7 +78,29 @@ public class ProcessesPanel extends JPanel {
      * @param name Name of the new process to add.
      */
     private void addProcess(String name) {
-        panel.add(new ProcessPanel(name));
+        ProcessPanel p = new ProcessPanel(name);
+        panel.add(p);
+        this.processes.add(p);
+    }
+
+    /**
+     * Allocates resource r to process p.
+     *
+     * @param p Process receiving the resource.
+     * @param r Resource being allocated.
+     */
+    public void allocateResource(ProcessPanel p, ResourcePanel r) {
+        p.addResource(r);
+    }
+
+    /**
+     * Frees resource r from process p.
+     *
+     * @param p Process to free resource from.
+     * @param rName Name of resource to free.
+     */
+    public void freeResource(ProcessPanel p, String rName) {
+        p.removeResource(rName);
     }
 
 }

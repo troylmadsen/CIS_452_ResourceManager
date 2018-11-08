@@ -16,7 +16,7 @@ public class ResourcePanel extends JPanel {
     private static final int WIDTH = 90;
 
     /** Unique color of this process */
-    private Color col;
+    private Color color;
 
     /**
      * Constructs a panel to display the information of a single system
@@ -24,7 +24,7 @@ public class ResourcePanel extends JPanel {
      *
      * @param name Name of the system resource to display.
      */
-    public ResourcePanel(String name) {
+    ResourcePanel(String name) {
         super();
 
         // Set the name of this panel
@@ -38,12 +38,32 @@ public class ResourcePanel extends JPanel {
 
         // Set the color of this panel
         Random r = new Random();
-        this.col = new Color(r.nextInt(256), r.nextInt(256),
+        this.color = new Color(r.nextInt(256), r.nextInt(256),
                 r.nextInt(256));
         setFree();
 
         // Add a label to this panel
         addLabel(name);
+    }
+
+    ResourcePanel(ResourcePanel r) {
+        super();
+
+        // Set the name of this panel
+        this.setName(r.getName());
+
+        // Create a border around this panel
+        this.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+
+        // Set the size of this panel
+        this.setPreferredSize(new Dimension(WIDTH,HEIGHT));
+
+        // Set the color of this panel
+        this.color = r.getColor();
+        setFree();
+
+        // Add a label to this panel
+        addLabel(this.getName());
     }
 
     /**
@@ -54,7 +74,7 @@ public class ResourcePanel extends JPanel {
     private void addLabel(String name) {
         JLabel l = new JLabel(name);
         Color lCol;
-        if ((this.col.getRed() + this.col.getGreen() + this.col.getBlue()) / 3 > 128) {
+        if ((this.color.getRed() + this.color.getGreen() + this.color.getBlue()) / 3 > 128) {
             lCol = Color.BLACK;
         }
         else {
@@ -76,7 +96,16 @@ public class ResourcePanel extends JPanel {
      * Sets the color of this panel to show that it is currently free.
      */
     public void setFree() {
-        this.setBackground(this.col);
+        this.setBackground(this.color);
+    }
+
+    /**
+     * Returns the color of this resource.
+     *
+     * @return The color of this panel.
+     */
+    public Color getColor() {
+        return this.color;
     }
 
 }

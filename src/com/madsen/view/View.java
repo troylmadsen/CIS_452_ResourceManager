@@ -8,8 +8,8 @@ import java.io.File;
  */
 public class View extends JFrame {
 
-    /** Simulation panel currently displayed */
-    private SimulationPanel panel;
+    /** Simulation simulationPanel currently displayed */
+    private SimulationPanel simulationPanel;
 
     /**
      * Constructs a View object with the given name in the title bar.
@@ -26,9 +26,9 @@ public class View extends JFrame {
         // Add menu bar
         this.setJMenuBar(constructMenuBar());
 
-        // Add empty simulation panel
-        panel = new SimulationPanel(0,0);
-        this.add(panel);
+        // Add empty simulation simulationPanel
+        simulationPanel = new SimulationPanel(0,0);
+        this.add(simulationPanel);
 
         // Display the window
         this.pack();
@@ -56,10 +56,11 @@ public class View extends JFrame {
     }
 
     public void createSimulation(int processes, int resources) {
-        this.remove(panel);
-        panel = new SimulationPanel(processes,resources);
-        this.add(panel);
-        this.pack();
+        this.remove(simulationPanel);
+        simulationPanel = new SimulationPanel(processes,resources);
+        this.add(simulationPanel);
+//        this.revalidate();
+//        this.pack();
     }
 
     /**
@@ -74,12 +75,57 @@ public class View extends JFrame {
 
         // Attempt to get a file from the user
         File file = null;
-//        chooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             file = chooser.getSelectedFile();
         }
 
         return file;
+    }
+
+    /**
+     * Sets the display of the specified process to the blocked state.
+     *
+     * @param pName Name of process to mark as blocked.
+     */
+    public void setBlocked(String pName) {
+        this.simulationPanel.setBlocked(pName);
+        this.revalidate();
+//        this.pack();
+    }
+
+    /**
+     * Sets the display of the specified process to the running state.
+     *
+     * @param pName Name of process to mark as running.
+     */
+    public void setRunning(String pName) {
+        this.simulationPanel.setRunning(pName);
+        this.revalidate();
+//        this.pack();
+    }
+
+    /**
+     * Allocates resource rName to process pName.
+     *
+     * @param pName Name of the process to receive resource rName.
+     * @param rName Name of the resource being allocated.
+     */
+    public void allocateResource(String pName, String rName) {
+        this.simulationPanel.allocateResource(pName,rName);
+        this.revalidate();
+//        this.pack();
+    }
+
+    /**
+     * Frees resource rName from process pName.
+     *
+     * @param pName Name of process to free resource from.
+     * @param rName Name of resource to free.
+     */
+    public void freeResource(String pName, String rName) {
+        this.simulationPanel.freeResource(pName,rName);
+        this.revalidate();
+//        this.pack();
     }
 
 }

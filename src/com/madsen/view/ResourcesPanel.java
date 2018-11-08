@@ -1,8 +1,11 @@
 package com.madsen.view;
 
+import com.madsen.model.Resource;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Displays all system resources in the simulation.
@@ -18,15 +21,16 @@ public class ResourcesPanel extends JPanel {
     /** Panel to display resources */
     private JPanel panel;
 
+    /** Resource panels displayed */
+    private ArrayList<ResourcePanel> resources;
+
     /**
      * Constructs a panel to display all system resources.
      *
-     * @param resources Number of system resources.
+     * @param numResources Number of system resources.
      */
-    public ResourcesPanel(int resources) {
+    public ResourcesPanel(int numResources) {
         super();
-//        super(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-//                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         // Set up this panel
         this.setPreferredSize(new Dimension(800, 200));
@@ -48,18 +52,27 @@ public class ResourcesPanel extends JPanel {
         scrollPane.getVerticalScrollBar().setUnitIncrement(10);
         panel = new JPanel();
         panel.setBackground(Color.WHITE);
-        int rows = (int)Math.ceil(resources / (double)COLS);
+        int rows = (int)Math.ceil(numResources / (double)COLS);
         panel.setLayout(new FlowLayout(FlowLayout.LEFT, GAP, GAP));
         panel.setPreferredSize(new Dimension(this.getPreferredSize().width,
                 (ResourcePanel.HEIGHT + GAP) * rows + GAP));
         scrollPane.setViewportView(panel);
         this.add(scrollPane, BorderLayout.CENTER);
 
-
-        // Add resources to this panel
-        for (int i = 0; i < resources; i++) {
-            addResource("Resource " + i);
+        // Create the resources
+        this.resources = new ArrayList<>(numResources);
+        for (int i = 0; i < numResources; i++) {
+            addResource("r" + i);
         }
+    }
+
+    /**
+     * Returns all resources displayed by this panel.
+     *
+     * @return All resources displayed by this panel.
+     */
+    public ArrayList<ResourcePanel> getResources() {
+        return this.resources;
     }
 
     /**
@@ -68,7 +81,27 @@ public class ResourcesPanel extends JPanel {
      * @param name Name of the new resource to add.
      */
     private void addResource(String name) {
-        panel.add(new ResourcePanel(name));
+        ResourcePanel r = new ResourcePanel(name);
+        this.resources.add(r);
+        panel.add(r);
+    }
+
+    /**
+     * Allocates resource r.
+     *
+     * @param r Resource to allocate.
+     */
+    public void allocateResource(ResourcePanel r) {
+        r.setHeld();
+    }
+
+    /**
+     * Frees resource r.
+     *
+     * @param r Resource to free.
+     */
+    public void freeResource(ResourcePanel r) {
+        r.setFree();
     }
 
 }
