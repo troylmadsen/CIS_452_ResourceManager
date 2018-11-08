@@ -1,9 +1,6 @@
 package com.madsen.view;
 
-import com.madsen.model.Resource;
-
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -29,12 +26,11 @@ public class ResourcesPanel extends JPanel {
      *
      * @param numResources Number of system resources.
      */
-    public ResourcesPanel(int numResources) {
+    ResourcesPanel(int numResources) {
         super();
 
         // Set up this panel
         this.setPreferredSize(new Dimension(800, 200));
-//        this.getVerticalScrollBar().setUnitIncrement(10);
         this.setLayout(new BorderLayout(0,0));
 
         // Add label to panel
@@ -91,7 +87,7 @@ public class ResourcesPanel extends JPanel {
      *
      * @param r Resource to allocate.
      */
-    public void allocateResource(ResourcePanel r) {
+    void allocateResource(ResourcePanel r) {
         r.setHeld();
     }
 
@@ -100,7 +96,7 @@ public class ResourcesPanel extends JPanel {
      *
      * @param r Resource to free.
      */
-    public void freeResource(ResourcePanel r) {
+    void freeResource(ResourcePanel r) {
         r.setFree();
     }
 

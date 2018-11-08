@@ -29,7 +29,7 @@ public class Process {
      *
      * @param name Name of this process.
      */
-    public Process(String name) {
+    Process(String name) {
         // Set the name of this process
         this.name = name;
 
@@ -132,8 +132,20 @@ public class Process {
      *
      * @param r Resource to remove.
      */
-    public void releaseResource(Resource r) {
+    void releaseResource(Resource r) {
         this.resources.remove(r);
+    }
+
+    public boolean owns(Resource res) {
+        for (Resource r: this.resources) {
+            if (r == res) {
+                // Resource owned
+                return true;
+            }
+        }
+
+        // Resource not owned
+        return false;
     }
 
 }

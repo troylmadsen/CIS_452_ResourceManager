@@ -4,6 +4,7 @@ import com.madsen.model.Model;
 import com.madsen.model.Process;
 import com.madsen.model.Resource;
 import com.madsen.view.View;
+import org.jetbrains.annotations.Contract;
 
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
@@ -11,6 +12,7 @@ import javax.swing.event.MenuListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -20,7 +22,7 @@ import java.util.Scanner;
 public class Controller implements MenuListener {
 
     /** Default delay time between commands in seconds */
-    private static final int DELAY = 3;
+    private static final int DELAY = 1;
 
     /** Name of the program to display */
     private final String PROGRAM_NAME = "Resource Manager";
@@ -46,16 +48,8 @@ public class Controller implements MenuListener {
     public Controller() {
         // Wait for view to be initialized
         try {
-            SwingUtilities.invokeAndWait(new Runnable() {
-                @Override
-                public void run() {
-                    view = new View(PROGRAM_NAME);
-                }
-            });
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            System.exit(1);
-        } catch (InvocationTargetException e) {
+            SwingUtilities.invokeAndWait(() -> view = new View(PROGRAM_NAME));
+        } catch (InterruptedException | InvocationTargetException e) {
             e.printStackTrace();
             System.exit(1);
         }
@@ -65,8 +59,19 @@ public class Controller implements MenuListener {
             this.view.getJMenuBar().getMenu(i).addMenuListener(this);
         }
 
-        // Get new simulation
-        newSimulation();
+        // Get a file from the user
+        File file = this.view.getInputFile();
+
+        // Exit if no file selected
+        if (file == null) {
+            System.exit(0);
+        }
+
+        // Parse file, create and run new simulation
+        parseFile(file);
+        this.view.createSimulation(this.processes,this.resources);
+        this.model = new Model(this.processes, this.resources);
+        runSimulation(Controller.DELAY);
     }
 
     /**
@@ -96,17 +101,10 @@ public class Controller implements MenuListener {
     }
 
     /**
-     * Runs the simulation by executing all parsed commands.
-     */
-    private void runSimulation() {
-        runSimulation(Controller.DELAY);
-    }
-
-    /**
      * Runs the simulation by executing all parsed commands with given delay
      * between each command.
      *
-     * @param delay Duration in second to wait between commands.
+     * @param delay Duration in seconds to wait between commands.
      */
     private void runSimulation(int delay) {
         try {
@@ -122,7 +120,6 @@ public class Controller implements MenuListener {
             String action = null;
             String rName = null;
             Process p;
-            Resource r;
             while (true) {
                 // Select next operable command
                 i = 0;
@@ -139,12 +136,12 @@ public class Controller implements MenuListener {
                     action = scanner.next();
                     rName = scanner.next();
                     p = this.model.getProcess(pName);
-                    if (!p.isBlocked() && action.equals("requests")) {
+                    if (p.isRunning() && action.equals("requests")) {
                         // Valid requests command, operate on it
                         this.commands.remove(i);
                         break;
                     }
-                    else if (!p.isBlocked() && action.equals("releases")){
+                    else if (p.isRunning() && action.equals("releases")){
                         // Valid releases command, operate on it
                         this.commands.remove(i);
                         break;
@@ -154,12 +151,7 @@ public class Controller implements MenuListener {
                 }
 
                 // Simulation finished
-                if (!running && i == 0) {
-                    System.out.println("All commands finished");
-                    break;
-                }
-                else if (!running && i > 0) {
-                    System.out.println("System deadlocked");
+                if (!running) {
                     break;
                 }
 
@@ -182,6 +174,24 @@ public class Controller implements MenuListener {
                 // Pause between each command
                 Thread.sleep(delay * 1000);
             }
+
+            // Output final system status
+            ArrayList<String> deadlocked = new ArrayList<>();
+            for (Process l: this.model.getProcesses()) {
+                if (l.isDeadlocked()) {
+                    deadlocked.add(l.getName());
+                }
+            }
+            if (deadlocked.size() > 0) {
+                System.out.print("System in deadlock: " + deadlocked.get(0));
+                for (int j = 1; j < deadlocked.size(); j++) {
+                    System.out.print(", " + deadlocked.get(j));
+                }
+                System.out.println();
+            }
+            else {
+                System.out.println("System in normal condition");
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -193,8 +203,24 @@ public class Controller implements MenuListener {
      * @param p Process to set in blocked state.
      */
     private void setBlocked(Process p) {
-        p.setBlocked();
-        this.view.setBlocked(p.getName());
+        if (p != null) {
+            p.setBlocked();
+            this.view.setBlocked(p.getName());
+            System.out.println(p.getName() + " blocked");
+        }
+    }
+
+    /**
+     * Sets the specified process to the deadlocked state.
+     *
+     * @param p Process to set in deadlocked state.
+     */
+    private void setDeadlocked(Process p) {
+        if (p != null) {
+            p.setDeadlocked();
+            this.view.setDeadlocked(p.getName());
+            System.out.println(p.getName() + " deadlocked");
+        }
     }
 
     /**
@@ -203,8 +229,11 @@ public class Controller implements MenuListener {
      * @param p Process to set in running state.
      */
     private void setRunning(Process p) {
-        p.setRunning();
-        this.view.setRunning(p.getName());
+        if (p != null && !p.isRunning()) {
+            p.setRunning();
+            this.view.setRunning(p.getName());
+            System.out.println(p.getName() + " running");
+        }
     }
 
     /**
@@ -241,7 +270,7 @@ public class Controller implements MenuListener {
         for (Process p: this.model.getProcesses()) {
             // Only processes requesting resources are of concern
             r = p.getRequested();
-            if (r != null) {
+            if (r != null && !p.isDeadlocked()) {
                 //TODO implement deadlock avoidance here
 
 
@@ -251,7 +280,11 @@ public class Controller implements MenuListener {
                     allocateResource(p, r);
                 }
                 else {
+                    // Process blocked
                     setBlocked(p);
+
+                    // Check for deadlock
+                    checkDeadlock(p, p);
                 }
             }
         }
@@ -264,28 +297,50 @@ public class Controller implements MenuListener {
      * @param r Resource being given.
      */
     private void allocateResource(Process p, Resource r) {
-        System.out.println("Allocating " + p.getName() + " to " + r.getName());
-        p.addResource(r);
-        p.setRequested(null);
-        r.setOwner(p);
-        view.allocateResource(p.getName(), r.getName());
+        if (p != null && r != null) {
+            System.out.println("Allocating " + r.getName() + " to " + p.getName());
+            p.addResource(r);
+            p.setRequested(null);
+            r.setOwner(p);
+            view.allocateResource(p.getName(), r.getName());
+        }
     }
 
     /**
-     * Prompts the user to select a simulation to run and runs selected valid
-     * simulation.
+     * Recursively checks for deadlock along the process-resource graph.
+     *
+     * @param p Process to check for deadlock state.
+     * @return Whether process is in deadlock.
      */
-    private void newSimulation() {
-        // Get a file from the user
-        File file = this.view.getInputFile();
-
-        // Parse file, create and run new simulation
-        if (file != null) {
-            parseFile(file);
-            this.view.createSimulation(this.processes,this.resources);
-            this.model = new Model(this.processes, this.resources);
-            runSimulation();
+    @Contract("null, _ -> false; !null, null -> false")
+    private boolean checkDeadlock(Process p, Process start) {
+        if (p == null || start == null) {
+            return false;
         }
+
+        // If a process is not blocked there can be no deadlock
+        if (!p.isBlocked()) {
+            return false;
+        }
+
+        /*
+        If the owner of the resource we are requesting is the start process,
+        we are in deadlock
+        */
+        else if (p.getRequested().getOwner() == start) {
+            setDeadlocked(p);
+            return true;
+        }
+
+        // Follow graph to next node
+        boolean isDeadlock = checkDeadlock(p.getRequested().getOwner(), start);
+
+        // If process is in deadlock, change its state to deadlocked
+        if (isDeadlock) {
+            setDeadlocked(p);
+        }
+
+        return isDeadlock;
     }
 
     /**
@@ -295,11 +350,11 @@ public class Controller implements MenuListener {
      */
     @Override
     public void menuSelected(MenuEvent e) {
-        if (e.getSource().equals(this.view.getJMenuBar().getMenu(0))) {
-            newSimulation();
-        }
-        else {
-            System.exit(0);
+        for (int i = 0; i < this.view.getJMenuBar().getMenuCount(); i++) {
+            if (this.view.getJMenuBar().getMenu(i).getName().equals("Exit")) {
+                System.exit(0);
+                break;
+            }
         }
     }
 

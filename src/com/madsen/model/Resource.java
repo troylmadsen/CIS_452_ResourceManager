@@ -44,8 +44,6 @@ public class Resource {
 
     /**
      * Sets the current owner of this resource.
-     *
-     * @return The current owner of this resource.
      */
     public void setOwner(Process p) {
         this.owner = p;
@@ -54,7 +52,7 @@ public class Resource {
     /**
      * Sets this resource as free.
      */
-    public void setFree() {
+    void setFree() {
         this.owner = null;
     }
 

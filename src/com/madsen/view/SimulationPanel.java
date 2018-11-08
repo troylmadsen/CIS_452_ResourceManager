@@ -1,7 +1,5 @@
 package com.madsen.view;
 
-import com.madsen.model.Process;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,13 +7,13 @@ import java.awt.*;
  * Class responsible for displaying the processes and resources of a single
  * simulation.
  */
-public class SimulationPanel extends JPanel {
+class SimulationPanel extends JPanel {
 
     /** Processes display */
-    ProcessesPanel processesPanel;
+    private ProcessesPanel processesPanel;
 
     /** Resources display */
-    ResourcesPanel resourcesPanel;
+    private ResourcesPanel resourcesPanel;
 
     /**
      * Constructs a panel displaying processes and resources of a simulation.
@@ -23,7 +21,7 @@ public class SimulationPanel extends JPanel {
      * @param processes Number of processes in the simulation.
      * @param resources Number of resources in the simulation.
      */
-    public SimulationPanel(int processes, int resources) {
+    SimulationPanel(int processes, int resources) {
         super();
 
         // Ensure that processes and resources are valid
@@ -87,9 +85,19 @@ public class SimulationPanel extends JPanel {
      *
      * @param pName Name of process to mark as blocked.
      */
-    public void setBlocked(String pName) {
+    void setBlocked(String pName) {
         ProcessPanel p = getProcess(pName);
-        p.setBlocked();
+        if (p != null) p.setBlocked();
+    }
+
+    /**
+     * Sets the display of the specified process to the deadlocked state.
+     *
+     * @param pName Name of process to mark as deadlocked.
+     */
+    void setDeadlocked(String pName) {
+        ProcessPanel p = getProcess(pName);
+        if (p != null) p.setDeadlocked();
     }
 
     /**
@@ -97,9 +105,9 @@ public class SimulationPanel extends JPanel {
      *
      * @param pName Name of process to mark as running.
      */
-    public void setRunning(String pName) {
+    void setRunning(String pName) {
         ProcessPanel p = getProcess(pName);
-        p.setRunning();
+        if (p != null) p.setRunning();
     }
 
     /**
@@ -108,7 +116,7 @@ public class SimulationPanel extends JPanel {
      * @param pName Name of the process to receive resource rName.
      * @param rName Name of the resource being allocated.
      */
-    public void allocateResource(String pName, String rName) {
+    void allocateResource(String pName, String rName) {
         // Get the process
         ProcessPanel p = getProcess(pName);
 
@@ -116,8 +124,10 @@ public class SimulationPanel extends JPanel {
         ResourcePanel r = getResource(rName);
 
         // Allocate the resource
-        this.processesPanel.allocateResource(p, new ResourcePanel(r));
-        this.resourcesPanel.allocateResource(r);
+        if (p != null && r != null) {
+            this.processesPanel.allocateResource(p, new ResourcePanel(r));
+            this.resourcesPanel.allocateResource(r);
+        }
     }
 
     /**
@@ -126,7 +136,7 @@ public class SimulationPanel extends JPanel {
      * @param pName Name of process to free resource from.
      * @param rName Name of resource to free.
      */
-    public void freeResource(String pName, String rName) {
+    void freeResource(String pName, String rName) {
         // Get the process
         ProcessPanel p = getProcess(pName);
 

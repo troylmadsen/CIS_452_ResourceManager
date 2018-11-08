@@ -74,7 +74,7 @@ public class Model {
      * @param rName Name of the resource to get.
      * @return Null or the resource with the specified name.
      */
-    public Resource getResource(String rName) {
+    private Resource getResource(String rName) {
         for (Resource r: this.resources) {
             if (r.getName().equals(rName)) {
                 return r;
@@ -119,7 +119,6 @@ public class Model {
 
         // Remove the resource r from process p
         if (p != null && r != null) {
-            //FIXME
             p.releaseResource(r);
             r.setFree();
         }

@@ -1,7 +1,5 @@
 package com.madsen.view;
 
-import com.madsen.model.Resource;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -29,7 +27,7 @@ public class ProcessesPanel extends JPanel {
      *
      * @param numProcesses Number of processes.
      */
-    public ProcessesPanel(int numProcesses) {
+    ProcessesPanel(int numProcesses) {
         super();
 
         // Set up this panel
@@ -89,7 +87,7 @@ public class ProcessesPanel extends JPanel {
      * @param p Process receiving the resource.
      * @param r Resource being allocated.
      */
-    public void allocateResource(ProcessPanel p, ResourcePanel r) {
+    void allocateResource(ProcessPanel p, ResourcePanel r) {
         p.addResource(r);
     }
 
@@ -99,7 +97,7 @@ public class ProcessesPanel extends JPanel {
      * @param p Process to free resource from.
      * @param rName Name of resource to free.
      */
-    public void freeResource(ProcessPanel p, String rName) {
+    void freeResource(ProcessPanel p, String rName) {
         p.removeResource(rName);
     }
 

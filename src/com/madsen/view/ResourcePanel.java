@@ -7,10 +7,10 @@ import java.util.Random;
 /**
  * Panel to display the information of a single shared resource.
  */
-public class ResourcePanel extends JPanel {
+class ResourcePanel extends JPanel {
 
     /** Height of a ResourcePanel */
-    public static final int HEIGHT = 25;
+    static final int HEIGHT = 25;
 
     /** Width of a ResourcePanel */
     private static final int WIDTH = 90;
@@ -88,14 +88,14 @@ public class ResourcePanel extends JPanel {
      * Sets the color of this panel to show that it is currently held by a
      * process.
      */
-    public void setHeld() {
+    void setHeld() {
         this.setBackground(new Color(150,150,150));
     }
 
     /**
      * Sets the color of this panel to show that it is currently free.
      */
-    public void setFree() {
+    void setFree() {
         this.setBackground(this.color);
     }
 
@@ -104,7 +104,7 @@ public class ResourcePanel extends JPanel {
      *
      * @return The color of this panel.
      */
-    public Color getColor() {
+    private Color getColor() {
         return this.color;
     }
 

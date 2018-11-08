@@ -45,11 +45,13 @@ public class View extends JFrame {
         JMenuBar menuBar = new JMenuBar();
 
         // Build menuFile item
-        JMenu menuFile = new JMenu("New");
-        menuBar.add(menuFile);
+//        JMenu menuFile = new JMenu("New");
+//        menuFile.setName("New");
+//        menuBar.add(menuFile);
 
         // Build menuExit item
         JMenu menuExit = new JMenu("Exit");
+        menuExit.setName("Exit");
         menuBar.add(menuExit);
 
         return menuBar;
@@ -59,8 +61,7 @@ public class View extends JFrame {
         this.remove(simulationPanel);
         simulationPanel = new SimulationPanel(processes,resources);
         this.add(simulationPanel);
-//        this.revalidate();
-//        this.pack();
+        this.revalidate();
     }
 
     /**
@@ -90,7 +91,16 @@ public class View extends JFrame {
     public void setBlocked(String pName) {
         this.simulationPanel.setBlocked(pName);
         this.revalidate();
-//        this.pack();
+    }
+
+    /**
+     * Sets the display of the specified process to the deadlocked state.
+     *
+     * @param pName Name of process to mark as deadlocked.
+     */
+    public void setDeadlocked(String pName) {
+        this.simulationPanel.setDeadlocked(pName);
+        this.revalidate();
     }
 
     /**
@@ -101,7 +111,6 @@ public class View extends JFrame {
     public void setRunning(String pName) {
         this.simulationPanel.setRunning(pName);
         this.revalidate();
-//        this.pack();
     }
 
     /**
@@ -113,7 +122,6 @@ public class View extends JFrame {
     public void allocateResource(String pName, String rName) {
         this.simulationPanel.allocateResource(pName,rName);
         this.revalidate();
-//        this.pack();
     }
 
     /**
@@ -125,7 +133,6 @@ public class View extends JFrame {
     public void freeResource(String pName, String rName) {
         this.simulationPanel.freeResource(pName,rName);
         this.revalidate();
-//        this.pack();
     }
 
 }
