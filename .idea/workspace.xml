@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e18a8629-9b49-4210-a224-0c419544b613" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="e18a8629-9b49-4210-a224-0c419544b613" name="Default Changelist" comment="-Documentation fixes&#10;-JavaDoc verification">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/madsen/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/madsen/controller/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/madsen/model/Resource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/madsen/model/Resource.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,14 +25,14 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="35390" />
-          <entry key="txt" value="456" />
+          <entry key="java" value="35397" />
+          <entry key="txt" value="513" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="35390" />
-          <entry key="PLAIN_TEXT" value="456" />
+          <entry key="JAVA" value="35397" />
+          <entry key="PLAIN_TEXT" value="513" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -66,11 +64,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/madsen/controller/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="239">
-              <caret line="317" column="55" selection-start-line="317" selection-start-column="55" selection-end-line="317" selection-end-column="55" />
+            <state relative-caret-position="180">
+              <caret line="21" column="49" lean-forward="true" selection-start-line="21" selection-start-column="49" selection-end-line="21" selection-end-column="49" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#7821#7822#0" expanded="true" />
@@ -80,11 +78,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/madsen/model/Resource.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="339">
-              <caret line="35" column="7" selection-start-line="35" selection-start-column="7" selection-end-line="35" selection-end-column="7" />
+            <state relative-caret-position="243">
+              <caret line="27" column="14" selection-start-line="27" selection-start-column="14" selection-end-line="27" selection-end-column="14" />
               <folding>
                 <element signature="e#984#985#0" expanded="true" />
                 <element signature="e#1014#1015#0" expanded="true" />
@@ -163,13 +161,13 @@
       <find>Allo</find>
       <find>System.</find>
       <find>Alloca</find>
-      <find>System.out</find>
       <find>setHe</find>
       <find>//</find>
       <find>System</find>
       <find>running</find>
       <find>Allocating</find>
       <find>release</find>
+      <find>System.out</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\troym\Desktop\School Work\College\CIS_452\projects\3\Resource_Manager\data</dir>
@@ -201,8 +199,8 @@
         <option value="$PROJECT_DIR$/data/input3c.data.txt" />
         <option value="$PROJECT_DIR$/data/input3d.data.txt" />
         <option value="$PROJECT_DIR$/src/com/madsen/model/Process.java" />
-        <option value="$PROJECT_DIR$/src/com/madsen/controller/Controller.java" />
         <option value="$PROJECT_DIR$/src/com/madsen/model/Resource.java" />
+        <option value="$PROJECT_DIR$/src/com/madsen/controller/Controller.java" />
       </list>
     </option>
   </component>
@@ -212,8 +210,8 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="953" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-7" />
     <option name="width" value="974" />
     <option name="height" value="1047" />
   </component>
@@ -297,7 +295,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541687217657" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541691541276" />
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -354,7 +352,7 @@
       <workItem from="1541287405331" duration="1432000" />
       <workItem from="1541346108267" duration="17690000" />
       <workItem from="1541516829303" duration="7154000" />
-      <workItem from="1541536410824" duration="61048000" />
+      <workItem from="1541536410824" duration="64142000" />
     </task>
     <task id="LOCAL-00001" summary="- Majority of View complete">
       <created>1540997357816</created>
@@ -419,11 +417,18 @@
       <option name="project" value="LOCAL" />
       <updated>1541685352645</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="-Documentation fixes&#10;-JavaDoc verification">
+      <created>1541687427417</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1541687427417</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="128640000" />
+    <option name="totallyTimeSpent" value="131734000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -435,10 +440,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-7" y="0" width="974" height="1047" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49585634" visible="true" weight="0.11940298" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49585634" visible="true" weight="0.24507658" />
       <window_info id="Structure" order="1" sideWeight="0.50414366" side_tool="true" weight="0.11940298" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -447,7 +452,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4989339" visible="true" weight="0.21475054" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4989339" visible="true" weight="0.21686748" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -483,7 +488,8 @@
     <MESSAGE value="-Full functionality" />
     <MESSAGE value="-Full deadlock checking and display&#10;-Code clean-up" />
     <MESSAGE value="-New test files&#10;-Began work on deadlock resolution" />
-    <option name="LAST_COMMIT_MESSAGE" value="-New test files&#10;-Began work on deadlock resolution" />
+    <MESSAGE value="-Documentation fixes&#10;-JavaDoc verification" />
+    <option name="LAST_COMMIT_MESSAGE" value="-Documentation fixes&#10;-JavaDoc verification" />
   </component>
   <component name="editorHistoryManager">
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/javax/swing/SwingUtilities.java">
@@ -648,27 +654,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/madsen/controller/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="317" column="55" selection-start-line="317" selection-start-column="55" selection-end-line="317" selection-end-column="55" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#7821#7822#0" expanded="true" />
-            <element signature="e#7876#7877#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/madsen/model/Resource.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
-          <caret line="35" column="7" selection-start-line="35" selection-start-column="7" selection-end-line="35" selection-end-column="7" />
+        <state relative-caret-position="243">
+          <caret line="27" column="14" selection-start-line="27" selection-start-column="14" selection-end-line="27" selection-end-column="14" />
           <folding>
             <element signature="e#984#985#0" expanded="true" />
             <element signature="e#1014#1015#0" expanded="true" />
             <element signature="e#1087#1088#0" expanded="true" />
             <element signature="e#1120#1121#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/madsen/controller/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="21" column="49" lean-forward="true" selection-start-line="21" selection-start-column="49" selection-end-line="21" selection-end-column="49" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#7821#7822#0" expanded="true" />
+            <element signature="e#7876#7877#0" expanded="true" />
           </folding>
         </state>
       </provider>

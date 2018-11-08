@@ -28,7 +28,7 @@ public class Controller implements MenuListener {
     private static final int DELAY = 1;
 
     /** Name of the program to display. */
-    private final String PROGRAM_NAME = "Resource Manager";
+    private static final String PROGRAM_NAME = "Resource Manager";
 
     /** Model containing the data of Resource Manager. */
     private Model model;
