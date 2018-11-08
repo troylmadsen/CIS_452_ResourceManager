@@ -21,10 +21,13 @@ import java.util.Scanner;
  */
 public class Controller implements MenuListener {
 
-    /** Default delay time between commands in seconds */
+    /** Boolean controlling if this runs with preemptive behavior. */
+    private static final boolean PREEMPTIVE = false;
+
+    /** Default delay time between commands in seconds. */
     private static final int DELAY = 1;
 
-    /** Name of the program to display */
+    /** Name of the program to display. */
     private final String PROGRAM_NAME = "Resource Manager";
 
     /** Model containing the data of Resource Manager. */
@@ -33,13 +36,13 @@ public class Controller implements MenuListener {
     /** View handling the display of Resource Manager. */
     private View view;
 
-    /** Number of processes in the current simulation */
+    /** Number of processes in the current simulation. */
     private int processes;
 
-    /** Number of resources in the current simulation */
+    /** Number of resources in the current simulation. */
     private int resources;
 
-    /** List of commands process/resource commands to operate */
+    /** List of commands process/resource commands to operate. */
     private LinkedList<String> commands;
 
     /**
@@ -284,7 +287,9 @@ public class Controller implements MenuListener {
                     setBlocked(p);
 
                     // Check for deadlock
-                    checkDeadlock(p, p);
+                    if (checkDeadlock(p, p) && PREEMPTIVE) {
+                        preempt(p);
+                    }
                 }
             }
         }
@@ -320,6 +325,7 @@ public class Controller implements MenuListener {
 
         // If a process is not blocked there can be no deadlock
         if (!p.isBlocked()) {
+//            setBlocked(p);
             return false;
         }
 
@@ -339,8 +345,47 @@ public class Controller implements MenuListener {
         if (isDeadlock) {
             setDeadlocked(p);
         }
+//        else {
+//            setBlocked(p);
+//        }
 
         return isDeadlock;
+    }
+
+    /**
+     * Preempts the resource requested by process p from its current owner po
+     * and gives it to process p. po is then placed back into command queue to
+     * simulate it requesting the resource again.
+     *
+     * @param p Process requesting a resource.
+     */
+    private void preempt(Process p) {
+        if (p == null) return;
+
+        // Process originally owning resource
+        Process po = p.getRequested().getOwner();
+
+        // Resource being preempted
+        Resource r = p.getRequested();
+
+        // Preempt resource and give it to p
+        System.out.println("Preempting resource " + r.getName() + " from "
+                + po.getName());
+        actionReleases(p.getName(),r.getName());
+        allocateResource(p, r);
+        setRunning(p);
+
+        // Requeue po requesting resource before next po command
+        for (int i = 0; i < this.commands.size(); i++) {
+            if (this.commands.get(i).startsWith(po.getName())
+                    || i == this.commands.size() - 1) {
+                this.commands.add(i,po.getName() + " requests "
+                        + po.getRequested().getName());
+                checkDeadlock(po,po);
+                actionRequests(po.getName(),r.getName());
+                break;
+            }
+        }
     }
 
     /**
