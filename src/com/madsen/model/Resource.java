@@ -44,6 +44,8 @@ public class Resource {
 
     /**
      * Sets the current owner of this resource.
+     *
+     * @param p Process to set as owner of this resource.
      */
     public void setOwner(Process p) {
         this.owner = p;
